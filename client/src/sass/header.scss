@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Great+Vibes&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=DM+Serif+Display:ital@0;1&family=Great+Vibes&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=DM+Serif+Display:ital@0;1&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+
+.header {
+    height: 90px;
+    width: 100vw;
+    background-color: rgb(228, 228, 228);
+    overflow: hidden;
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 100%;
+    }
+}
+
+
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    position: relative;
+    text-decoration: none;
+
+    h1 {
+        font-family: "DM Serif Display", serif;
+        font-weight: 400;
+        font-style: normal;
+        display: flex;
+        font-size: 40px;
+        color: #774eac;
+    }
+
+    img {
+        display: flex;
+        align-items: flex-end;
+        height: 145px;
+    }
+
+
+}
+
+.link {
+    display: flex;
+
+    gap: 25px;
+
+    a {
+        color: #774eac;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+
+        h1 {
+            padding: 0;
+            margin: 0;
+            font-size: 30px;
+        }
+
+    }
+
+}
