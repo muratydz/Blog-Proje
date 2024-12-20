@@ -41,7 +41,7 @@ const SignIn = () => {
 
             if(res.ok) {
                 dispacth(signInSuccess(data));
-                navigate("/");
+                navigate("/admin-panel");
             }
 
         } catch (error) {

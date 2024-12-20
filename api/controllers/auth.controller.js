@@ -6,6 +6,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const signup = async (req, res, next) => {
+
+    if (!req.user || !req.user.isAdmin) {
+        return next(errorHandler(403, "You are not allowed to signup"))
+    }
+
     const { username, email, password } = req.body;
 
     if (
