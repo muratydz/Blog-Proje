@@ -41,7 +41,7 @@ const SignIn = () => {
 
             if(res.ok) {
                 dispacth(signInSuccess(data));
-                navigate("/admin-panel");
+                navigate("/admin-panel?tab=all-post");
             }
 
         } catch (error) {
