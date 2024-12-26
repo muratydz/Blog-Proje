@@ -11,7 +11,7 @@ export const getUsers = async (req, res, next) => {
         return next(errorHandler(403, "You are not allowed get User"))
     }
     try {
-        const users = await User.find();
+        const users = await User.find().sort({isAdmin: -1});
 
         const usersWithoutPassword = users.map((user) => {
             const { password, ...rest } = user._doc;

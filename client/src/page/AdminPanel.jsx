@@ -8,24 +8,24 @@ import "../css/admin-panel.css";
 const AdminPanel = () => {
   const location = useLocation();
   const [tab, setTab] = useState("");
-
+  
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const tabFormUrl = urlParams.get("tab");
-    if (tabFormUrl) {
+    if (tabFormUrl)  
+      {
       setTab(tabFormUrl);
     }
   }, [location.search]);
 
+
   return (
     <div className="dashboard">
       <div>
-      <DashSidebar/>
-        
+        <DashSidebar />
       </div>
-      
       <div className="dashCompoment">
-        {tab === "all-post" && <DashPost/>}
+        {tab === "all-post" && <DashPost />}
         {tab === "user-management" && <DashUser />}
       </div>
     </div>

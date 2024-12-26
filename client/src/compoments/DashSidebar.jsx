@@ -1,27 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from "react-router-dom";
+import { FaUser } from "react-icons/fa";
+import { MdOutlinePostAdd } from "react-icons/md";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { useSelector } from 'react-redux';
 
 const DashSidebar = () => {
   const location = useLocation();
+  const [showSidebar, setShowSidebar] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
 
   const isActive = (path) => {
     return location.search.includes(path);
   };
 
+
+
   return (
-    <div className="dashSidebar">
-      <Link 
-        to={"/admin-panel?tab=all-post"} 
-        className={`link ${isActive('all-post') ? 'link-active' : ''}`}
-      >
-        Post Management
-      </Link>
-      <Link 
-        to={"/admin-panel?tab=user-management"} 
-        className={`link ${isActive('user-management') ? 'link-active' : ''}`}
-      >
-        User Management
-      </Link>
+    <div >
+      <div hidden={showSidebar} className='menu-bars'>
+        <FaBars onClick={() => setShowSidebar(true)} />
+      </div>
+      <div className={showSidebar ? "dashSidebar active" : "dashSidebar"}>
+        <div hidden={!showSidebar} className='sidebarTimes'>
+          <FaTimes onClick={() => setShowSidebar(false)} />
+        </div>
+        <Link
+          to={"/admin-panel?tab=all-post"}
+          className={`link ${isActive('all-post') ? 'link-active' : ''}`}
+          onClick={() => setShowSidebar(false)}
+        >
+          <MdOutlinePostAdd />Post Management
+        </Link>
+        <Link
+          to={"/admin-panel?tab=user-management"}
+          className={`link ${isActive('user-management') ? 'link-active' : ''}`}
+          onClick={() => setShowSidebar(false)}
+        >
+          <FaUser />User Management
+        </Link>
+        <div className='currentUser'>
+          <img src={currentUser.profilePicture} alt="img" />
+          <h2>
+            {currentUser.username}
+          </h2>
+          <span>{currentUser.isAdmin && "Admin"}</span>
+        </div>
+      </div>
     </div>
   );
 };

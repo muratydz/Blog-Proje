@@ -1,12 +1,12 @@
 .dashboard {
-    display: grid;
-    grid-template-columns: 250px 1fr;
     height: 100vh;
+    position: relative;
 
     .dashCompoment {
         background-color: #ffffff;
-        padding: 20px;
-        overflow-y: auto;
+        display: flex;
+        justify-content: center;
+        height: 80vh;
 
         h1 {
             font-size: 2rem;
@@ -18,6 +18,14 @@
 
 }
 
+.menu-bars {
+    display: inline-block;
+    font-size: 25px;
+    margin: 20px 0 0 20px;
+    cursor: pointer;
+
+}
+
 .dashSidebar {
     background-color: #f8f9fa;
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
@@ -26,17 +34,41 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    width: 250px;
+    top: 0;
+    left: -100%;
+    position: absolute;
+
+    &.active {
+        left: 0;
+        transition: 350ms;
+    }
+
+    .sidebarTimes {
+        font-size: 25px;
+        display: flex;
+        width: 100%;
+        justify-content: end;
+        margin-bottom: 15px;
+        cursor: pointer;
+
+
+        &:hover {
+            color: rgb(201, 25, 25)
+        }
+    }
+
 
     .link {
         padding: 15px 20px;
-        margin-bottom: 10px;
-        width: 100%;
+        margin: 10px 0;
         text-align: left;
         text-decoration: none;
         color: #495057;
         font-size: 1rem;
         border-radius: 5px;
         transition: all 0.3s ease;
+        width: 200px;
 
         &:hover {
             background-color: #e9ecef;
@@ -46,6 +78,93 @@
         &-active {
             background-color: #343a40;
             color: #fff;
+        }
+    }
+
+    .currentUser {
+        padding: 15px 20px;
+        margin: 10px 0;
+        text-align:left;
+        text-decoration: none;
+        background-color: #343a40;
+        color: #fff;
+        font-size: 1rem;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        width: 200px;
+        display: flex;
+        
+        h2{
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            margin: 0 10px;
+            font-weight: 300;
+        }
+        span{
+            display: flex;
+            align-items: center;
+            color: rgb(5, 255, 5);
+            text-transform: lowercase;
+        }
+        img {
+            border-radius: 50%;
+            margin: 5px;
+            height: 30px;
+        }
+
+    }
+}
+
+
+.dashUser {
+    .addUser {
+        height: 50px;
+        width: 200px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        border-radius: 10px;
+        background-color: #f8f9fa;
+        box-shadow: 6px 6px 12px #bebebe,
+            -6px -6px 12px #ececec;
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: 6px 6px 12px rgb(148, 148, 148),
+                -6px -6px 12px #dddddd;
+        }
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .userCard {
+        display: flex;
+        align-items: center;
+        width: 500px;
+        height: 50px;
+        margin-bottom: 25px;
+        padding: 5px 15px;
+        background-color: #f8f9fa;
+        box-shadow: 3px 3px 3px #bebebe;
+        justify-content: space-between;
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: 6px 6px 12px #a1a1a1,
+        }
+
+        .userIcons {
+            font-size: 20px;
+            display: flex;
+            width: 60px;
+            justify-content: space-between;
+
+            .RxUpdate {
+                color: red;
+            }
         }
     }
 }
