@@ -5,6 +5,7 @@ import DashPost from '../compoments/DashPost.jsx';
 import DashUser from '../compoments/DashUser.jsx';
 import DashUpdateUser from '../compoments/DashUpdateUser.jsx';
 import "../css/admin-panel.css";
+import DashAddUser from '../compoments/DashAddUser.jsx';
 
 const AdminPanel = () => {
   const location = useLocation();
@@ -18,7 +19,7 @@ const AdminPanel = () => {
     if (tabFormUrl) {
       setTab(tabFormUrl);
     }
-    if(userIdFromUrl){
+    if (userIdFromUrl) {
       setUserId(userIdFromUrl);
     }
   }, [location.search]);
@@ -33,6 +34,7 @@ const AdminPanel = () => {
         {tab === "all-post" && <DashPost />}
         {tab === "user-management" && <DashUser />}
         {tab === "update-user" && <DashUpdateUser userId={userId} />}
+        {tab === "add-user" && <DashAddUser />}
       </div>
     </div>
   );

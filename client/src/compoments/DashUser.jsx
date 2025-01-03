@@ -28,14 +28,13 @@ const DashUser = () => {
     navigate(`/admin-panel?tab=update-user&userId=${userId}`);
   }
 
-
   return (
     <div className='dashUser'>
-      <div className='addUser'>Add user</div>
+      <div className='addUser' onClick={() => navigate("/admin-panel?tab=add-user")}>Add user</div>
       <h1>-Users-</h1>
       {loading && "Loading..."}
-      {users && users.map((user) => (
-        <div className='userCard' key={user._id}>
+      {users && users.map((user, int) => (
+        <div className='userCard' key={int}>
           <div className='userInformation'>
             <div>
               {user.username}

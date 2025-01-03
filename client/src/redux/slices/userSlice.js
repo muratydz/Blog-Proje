@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { data } from "react-router-dom";
 
 
 const initialState = {
@@ -44,7 +45,7 @@ export const updateUser = createAsyncThunk("updateUser", async ({ userId, formDa
 });
 
 
-export const deleteUser = createAsyncThunk("deleteUser", async (userId,) => {
+export const deleteUser = createAsyncThunk("deleteUser", async (userId) => {
     try {
         const res = await fetch(`/api/user/delete/${userId}`, {
             method: "DELETE",
@@ -57,6 +58,27 @@ export const deleteUser = createAsyncThunk("deleteUser", async (userId,) => {
     }
 })
 
+export const addUser = createAsyncThunk("addUser", async (formData, { rejectWithValue }) => {
+    try {
+        const res = await fetch("/api/auth/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
+        const data = await res.json();
+        console.log(data);
+        if (res.ok) {
+            return data;
+        } else {
+            return rejectWithValue(data.message || "Failed to add user")
+        }
+    } catch (error) {
+        return rejectWithValue(data.message || "Someting went wrong")
+    }
+
+})
 
 const userSlice = createSlice({
     name: "user",
@@ -123,6 +145,18 @@ const userSlice = createSlice({
                 state.users = state.users.filter((user) => user._id !== action.payload);
             })
             .addCase(deleteUser.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(addUser.pending, (state) => {
+                state.status = "loading";
+                state.error = false;
+            })
+            .addCase(addUser.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.users = [...state.users, action.payload];
+            })
+            .addCase(addUser.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.payload;
             })
