@@ -2,18 +2,36 @@ import React, { useState } from 'react';
 import { Link, useLocation } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { MdOutlinePostAdd } from "react-icons/md";
-import { FaBars, FaTimes } from "react-icons/fa";
-import { useSelector } from 'react-redux';
+import { FaBars, FaTimes, FaSignOutAlt } from "react-icons/fa";
+import { useDispatch, useSelector } from 'react-redux';
+import { signoutSuccess } from '../redux/slices/userSlice';
 
 const DashSidebar = () => {
   const location = useLocation();
   const [showSidebar, setShowSidebar] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const isActive = (path) => {
     return location.search.includes(path);
   };
 
+  const handleSignout = async () => {
+    try {
+      const res = await fetch("/api/user/signout", {
+        method: "POST"
+      })
+      const data = res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signoutSuccess())
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
 
   return (
@@ -29,7 +47,7 @@ const DashSidebar = () => {
           to={"/admin-panel?tab=all-post"}
           className={`link ${isActive('all-post') ? 'link-active' : ''}`}
           onClick={() => setShowSidebar(false)}
-        >
+          >
           <MdOutlinePostAdd />Post Management
         </Link>
         <Link
@@ -39,12 +57,16 @@ const DashSidebar = () => {
         >
           <FaUser />User Management
         </Link>
-        <div className='currentUser'>
+        <div className='currentUser sideCard'>
           <img src={currentUser.profilePicture} alt="img" />
           <h2>
             {currentUser.username}
           </h2>
           <span>{currentUser.isAdmin && "Admin"}</span>
+        </div>
+        <div className='signout sideCard' onClick={handleSignout}>
+          <h2>Sign Out</h2>
+          <FaSignOutAlt />
         </div>
       </div>
     </div>

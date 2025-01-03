@@ -67,26 +67,6 @@
   background-color: #343a40;
   color: #fff;
 }
-.dashSidebar .currentUser {
-  padding: 15px 20px;
-  margin: 10px 0;
-  text-align: left;
-  text-decoration: none;
-  background-color: #343a40;
-  color: #fff;
-  font-size: 1rem;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-  width: 200px;
-  display: flex;
-}
-.dashSidebar .currentUser h2 {
-  display: flex;
-  align-items: center;
-  font-size: 18px;
-  margin: 0 10px;
-  font-weight: 300;
-}
 .dashSidebar .currentUser span {
   display: flex;
   align-items: center;
@@ -97,6 +77,34 @@
   border-radius: 50%;
   margin: 5px;
   height: 30px;
+}
+.dashSidebar .signout:hover {
+  color: red;
+}
+
+.sideCard {
+  padding: 15px 20px;
+  margin: 10px 0;
+  text-align: left;
+  text-decoration: none;
+  background-color: #343a40;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 5px;
+  width: 200px;
+  display: flex;
+  cursor: pointer;
+}
+.sideCard h2 {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  margin: 0 10px;
+  font-weight: 300;
+}
+.sideCard:hover {
+  background-color: #e9ecef;
+  color: #343a40;
 }
 
 .dashUser .addUser {
@@ -128,6 +136,12 @@
   justify-content: space-between;
   cursor: pointer;
 }
+.dashUser .userCard .userInformation {
+  margin-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
+}
 .dashUser .userCard:hover {
   box-shadow: 6px 6px 12px #a1a1a1;
 }
@@ -137,8 +151,17 @@
   width: 60px;
   justify-content: space-between;
 }
-.dashUser .userCard .userIcons .RxUpdate {
-  color: red;
+.dashUser .userCard .userIcons .updateIcon {
+  color: rgb(0, 85, 0);
+}
+.dashUser .userCard .userIcons .updateIcon:hover {
+  color: rgb(6, 239, 6);
+}
+.dashUser .userCard .userIcons .deleteIcon {
+  color: rgb(185, 5, 5);
+}
+.dashUser .userCard .userIcons .deleteIcon:hover {
+  color: rgb(254, 36, 36);
 }
 
 /*# sourceMappingURL=admin-panel.css.map */

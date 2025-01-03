@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from '../redux/slices/userSlice';
+import { deleteUser, getUsers } from '../redux/slices/userSlice';
 import { FaTimes } from "react-icons/fa";
 import { RxUpdate } from "react-icons/rx";
+import { useNavigate } from 'react-router-dom';
 
 const DashUser = () => {
 
@@ -11,14 +12,22 @@ const DashUser = () => {
   const error = useSelector((state) => state.user.error);
   const loading = useSelector((state) => state.user.loading);
   const dispatch = useDispatch();
-  console.log(users);
-  console.log(status);
+  const navigate = useNavigate();
   console.log(error);
-  console.log(loading);
+  console.log(users);
 
   useEffect(() => {
     dispatch(getUsers());
   }, []);
+
+  const handleDelete = (userId) => {
+    dispatch(deleteUser(userId));
+  };
+
+  const handleUpdate = (userId) => {
+    navigate(`/admin-panel?tab=update-user&userId=${userId}`);
+  }
+
 
   return (
     <div className='dashUser'>
@@ -28,12 +37,17 @@ const DashUser = () => {
       {users && users.map((user) => (
         <div className='userCard' key={user._id}>
           <div className='userInformation'>
-            {user.username}
-            {user.isAdmin ? "admin" : "user"}
+            <div>
+              {user.username}
+            </div>
+            <div>
+              {user.isAdmin ? "admin" : "user"}
+            </div>
+
           </div>
           <div className='userIcons'>
-            <RxUpdate/>
-            <FaTimes />
+            <RxUpdate className='updateIcon' onClick={() => handleUpdate(user._id)}/>
+            <FaTimes className='deleteIcon' onClick={() => handleDelete(user._id)} />
           </div>
         </div>
       ))}
