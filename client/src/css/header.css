@@ -4,7 +4,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=DM+Serif+Display:ital@0;1&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap");
 .header {
   height: 90px;
-  width: 100vw;
+  width: 100%;
   background-color: rgb(228, 228, 228);
   overflow: hidden;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { FaBars, FaTimes, FaSignOutAlt } from "react-icons/fa";
@@ -11,6 +11,7 @@ const DashSidebar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const isActive = (path) => {
     return location.search.includes(path);
@@ -31,6 +32,11 @@ const DashSidebar = () => {
     } catch (error) {
       console.log(error)
     }
+  }
+  
+  const handleUpdate = (userId) => {
+    navigate(`/admin-panel?tab=update-user&userId=${userId}`);
+    setShowSidebar(false);
   }
 
 
@@ -57,7 +63,7 @@ const DashSidebar = () => {
         >
           <FaUser />User Management
         </Link>
-        <div className='currentUser sideCard'>
+        <div className='currentUser sideCard' onClick={() => handleUpdate(currentUser._id)}>
           <img src={currentUser.profilePicture} alt="img" />
           <h2>
             {currentUser.username}
