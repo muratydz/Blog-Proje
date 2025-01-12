@@ -6,6 +6,7 @@ import DashUser from '../compoments/DashUser.jsx';
 import DashUpdateUser from '../compoments/DashUpdateUser.jsx';
 import "../css/admin-panel.css";
 import DashAddUser from '../compoments/DashAddUser.jsx';
+import DashCreatePost from '../compoments/DashCreatePost.jsx';
 
 const AdminPanel = () => {
   const location = useLocation();
@@ -32,6 +33,7 @@ const AdminPanel = () => {
       </div>
       <div className="dashCompoment">
         {tab === "all-post" && <DashPost />}
+        {tab === "create-post" && <DashCreatePost/>}
         {tab === "user-management" && <DashUser />}
         {tab === "update-user" && <DashUpdateUser userId={userId} />}
         {tab === "add-user" && <DashAddUser />}

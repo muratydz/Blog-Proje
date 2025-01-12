@@ -42,7 +42,7 @@ const DashUser = () => {
 
   return (
     <div className='dashUser'>
-      <div className='addUser' onClick={() => navigate("/admin-panel?tab=add-user")}>Add user</div>
+      <button className='button-55' onClick={() => navigate("/admin-panel?tab=add-user")}>Add user</button>
       <h1>-Users-</h1>
       {loading && "Loading..."}
       {users && users.filter((user) => user._id !== currentUser._id).map((user, int) => (

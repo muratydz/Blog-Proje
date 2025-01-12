@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getPosts, loadMorePosts } from '../redux/slices/postSlice';
 import { RxUpdate } from 'react-icons/rx';
 import { FaTimes } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const DashPost = () => {
   const dispatch = useDispatch();
@@ -11,6 +12,7 @@ const DashPost = () => {
   const status = useSelector((state) => state.post.status);
   const error = useSelector((state) => state.post.error);
   const [startIndex, setStartIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getPosts());
@@ -40,7 +42,7 @@ const DashPost = () => {
 
   return (
     <div className='dashPost'>
-      <button>Add Post</button>
+      <button className='button-55' onClick={() => navigate("/admin-panel?tab=create-post")}>Add Post</button>
       <h1>-All Post-</h1>
       {status === "loading" && "loading..."}
       {status === "succeeded" &&
@@ -60,9 +62,9 @@ const DashPost = () => {
           </div>
         ))
       }
-      <div>
-        <button onClick={handleShowBack}>geri</button>
-        <button onClick={handleShowForward}>ileri</button>
+      <div hidden={status === "loading"} className='postbtn'>
+        <button className='button-55' onClick={handleShowBack}>geri</button>
+        <button className='button-55' onClick={handleShowForward}>ileri</button>
       </div>
       {status === "failed" && error}
       <div>

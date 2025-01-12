@@ -75,7 +75,7 @@ export const addUser = createAsyncThunk("addUser", async (formData, { rejectWith
             return rejectWithValue(data.message || "Failed to add user")
         }
     } catch (error) {
-        return rejectWithValue(data.message || "Someting went wrong")
+        return rejectWithValue(error.message || "Someting went wrong")
     }
 
 })

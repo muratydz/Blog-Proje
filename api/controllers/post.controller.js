@@ -2,11 +2,16 @@ import Post from "../models/post.model.js";
 import { errorHandler } from "../utils/error.js";
 
 export const create = async (req, res, next) => {
+
     if (!req.user.isAdmin) {
         return next(errorHandler(403, "You are not allowed to create a post"));
     };
     if (!req.body.title || !req.body.content) {
         return next(errorHandler(400, "Please provide all required fields"));
+    };
+    const existingPost = await Post.findOne({ title: req.body.title });
+    if (existingPost) {
+        return next(errorHandler(400, "Title already exists"));
     };
 
     const slug = req.body.title.split(" ").join("-").toLowerCase().replace(/[^a-zA-Z0-9-]/g, '');
@@ -41,37 +46,37 @@ export const getPosts = async (req, res, next) => {
                 ],
             }),
         })
-            .sort({ updateAt: sortDirection})
+            .sort({ updateAt: sortDirection })
             .skip(startIndex)
             .limit(limit);
 
-    const totalposts = await Post.countDocuments();
+        const totalposts = await Post.countDocuments();
 
-    const now = new Date();
+        const now = new Date();
 
-    const oneMouthAgo = new Date(
-        now.getFullYear(),
-        now.getMonth() - 1,
-        now.getDate()
-    );
+        const oneMouthAgo = new Date(
+            now.getFullYear(),
+            now.getMonth() - 1,
+            now.getDate()
+        );
 
-    const lastMonthPosts = await Post.countDocuments({
-        createdAt: {$gte: oneMouthAgo},
-    })
+        const lastMonthPosts = await Post.countDocuments({
+            createdAt: { $gte: oneMouthAgo },
+        })
 
-    res.status(200).json({
-        posts,
-        totalposts,
-        lastMonthPosts,
-    });
+        res.status(200).json({
+            posts,
+            totalposts,
+            lastMonthPosts,
+        });
     } catch (error) {
         next(error)
     }
-} 
+}
 
-export const deletePost = async(req, res, next) => {
-    if(!req.user.isAdmin) {
-        return next(errorHandler(403 , "You are not allowed to delete this post"));
+export const deletePost = async (req, res, next) => {
+    if (!req.user.isAdmin) {
+        return next(errorHandler(403, "You are not allowed to delete this post"));
     }
     try {
         await Post.findByIdAndDelete(req.params.postId);
@@ -81,8 +86,8 @@ export const deletePost = async(req, res, next) => {
     }
 }
 
-export const updatePost = async(req, res, next) => {
-    if(!req.user.isAdmin){
+export const updatePost = async (req, res, next) => {
+    if (!req.user.isAdmin) {
         return next(errorHandler(403, "You are nor allowed to update this post"));
     }
     const slug = req.body.title.split(" ").join("-").toLowerCase().replace(/[^a-zA-Z0-9-]/g, '');
@@ -90,7 +95,7 @@ export const updatePost = async(req, res, next) => {
         const updatePost = await Post.findByIdAndUpdate(
             req.params.postId,
             {
-                $set:{
+                $set: {
                     title: req.body.title,
                     content: req.body.content,
                     category: req.body.category,
@@ -98,7 +103,7 @@ export const updatePost = async(req, res, next) => {
                     slug,
                 },
             },
-            {new: true}
+            { new: true }
         );
         res.status(200).json(updatePost);
     } catch (error) {

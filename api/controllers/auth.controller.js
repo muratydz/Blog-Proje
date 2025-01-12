@@ -7,7 +7,7 @@ dotenv.config();
 
 export const signup = async (req, res, next) => {
     if (!req.user.isAdmin && req.user.id !== req.params.userId) {
-        return next(errorHandler(403, "you are not allowed to update this user"));
+        return next(errorHandler(403, "you are not allowed to create this user"));
     };
     if (req.body.password) {
         if (req.body.password.length < 6) {

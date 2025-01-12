@@ -7,7 +7,6 @@
   background-color: #ffffff;
   display: flex;
   justify-content: center;
-  height: 80vh;
 }
 .dashboard .dashCompoment h1 {
   font-size: 2rem;
@@ -133,22 +132,52 @@
   z-index: 999;
 }
 
-.dashUser .addUser {
-  height: 50px;
-  width: 200px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  border-radius: 10px;
-  background-color: #f8f9fa;
-  box-shadow: 6px 6px 12px #bebebe, -6px -6px 12px #ececec;
+.button-55 {
+  align-self: center;
+  background-color: #fff;
+  background-image: none;
+  background-position: 0 90%;
+  background-repeat: repeat no-repeat;
+  background-size: 4px 3px;
+  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: rgba(0, 0, 0, 0.2) 15px 28px 25px -18px;
+  box-sizing: border-box;
+  color: #41403e;
   cursor: pointer;
+  display: inline-block;
+  font-family: Neucha, sans-serif;
+  font-size: 1rem;
+  line-height: 23px;
+  outline: none;
+  padding: 0.75rem;
+  text-decoration: none;
+  transition: all 235ms ease-in-out;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
-.dashUser .addUser:hover {
-  box-shadow: 6px 6px 12px rgb(148, 148, 148), -6px -6px 12px #dddddd;
+.button-55:hover {
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px -5px;
+  transform: translate3d(0, 2px, 0);
 }
-.dashUser h1 {
+.button-55:focus {
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 4px -6px;
+}
+
+.dashUser {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+}
+.dashUser button {
+  width: 350px;
 }
 .dashUser .userCard {
   display: flex;
@@ -187,6 +216,63 @@
   color: rgb(185, 5, 5);
 }
 .dashUser .userCard .userIcons .deleteIcon:hover {
+  color: rgb(254, 36, 36);
+}
+
+.dashPost {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.dashPost button {
+  width: 350px;
+}
+.dashPost .postbtn {
+  width: 100%;
+  text-align: center;
+}
+.dashPost .postbtn button {
+  width: 100px;
+  padding: 5px 15px;
+  margin: 15px;
+  align-items: center;
+  justify-content: center;
+}
+.dashPost .postCard {
+  display: flex;
+  align-items: center;
+  width: 500px;
+  height: 70px;
+  margin-bottom: 25px;
+  padding: 5px 15px;
+  background-color: #f8f9fa;
+  box-shadow: 3px 3px 3px #bebebe;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.dashPost .postCard:hover {
+  box-shadow: 6px 6px 12px #a1a1a1;
+}
+.dashPost .postCard img {
+  height: 55px;
+}
+.dashPost .postCard .postIcons {
+  font-size: 20px;
+  display: flex;
+  width: 60px;
+  justify-content: space-between;
+}
+.dashPost .postCard .postIcons .updateIcon {
+  color: rgb(0, 85, 0);
+}
+.dashPost .postCard .postIcons .updateIcon:hover {
+  color: rgb(6, 239, 6);
+}
+.dashPost .postCard .postIcons .deleteIcon {
+  color: rgb(185, 5, 5);
+}
+.dashPost .postCard .postIcons .deleteIcon:hover {
   color: rgb(254, 36, 36);
 }
 

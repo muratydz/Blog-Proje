@@ -35,9 +35,29 @@ export const loadMorePosts = createAsyncThunk("loadMorePosts", async (startIndex
         return data.posts;
 
     } catch (error) {
-        return rejectWithValue(data.message || "Someting went wrong -showMore")
+        return rejectWithValue(error.message || "Someting went wrong -showMore")
     }
 
+})
+
+export const createPost = createAsyncThunk("createPost", async (postData, { rejectWithValue }) => {
+    try {
+        const res = await fetch("/api/post/create", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(postData)
+        });
+        const data = await res.json();
+        if (!res.ok) {
+            return rejectWithValue(data.message || "Failed to creating post");
+        }
+        return data;
+
+    } catch (error) {
+        return rejectWithValue(error.message || "Someting went wrong -createPost")
+    }
 })
 
 const postSlice = createSlice({
@@ -75,6 +95,19 @@ const postSlice = createSlice({
                 state.posts = action.payload;
                 state.showMore = action.payload.length >= 9;
             })
+            .addCase(createPost.pending, (state) => {
+                state.status = "loading";
+                state.error = null;
+            })
+            .addCase(createPost.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(createPost.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.error = null;
+                state.posts = [...state.posts, action.payload];
+            }) 
     }
 })
 
