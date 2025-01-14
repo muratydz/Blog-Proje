@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .dashboard {
   width: 100;
   height: 100vh;
@@ -274,6 +275,95 @@
 }
 .dashPost .postCard .postIcons .deleteIcon:hover {
   color: rgb(254, 36, 36);
+}
+
+.createPost {
+  width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Butonlar */
+}
+.createPost form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.createPost .postImg {
+  width: 250px;
+}
+.createPost .imgSubmit {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.createPost .imgSubmit input[type=file] {
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.createPost .imgSubmit button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.createPost .imgSubmit button:hover {
+  background-color: #0056b3;
+}
+.createPost button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+.createPost button:hover {
+  background-color: #0056b3;
+  color: #ffffff;
+}
+.createPost button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Resim Yükleme */
+/* Input Alanları */
+input[type=text],
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input[type=text]:focus,
+textarea:focus,
+select:focus {
+  border-color: #007bff;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+select {
+  font-size: 14px;
 }
 
 /*# sourceMappingURL=admin-panel.css.map */

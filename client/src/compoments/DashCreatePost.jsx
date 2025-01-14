@@ -13,7 +13,7 @@ const DashCreatePost = () => {
     category: "uncategorized"
   });
   const [files, setFiles] = useState([]);
-  const { error, status } = useSelector((state) => state.post)
+  const { error } = useSelector((state) => state.post)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   console.log(formData);
@@ -25,11 +25,11 @@ const DashCreatePost = () => {
 
   const handleImageSubmit = async () => {
     const promises = [];
-    for(let i = 0; i < files.length; i++){
+    for (let i = 0; i < files.length; i++) {
       promises.push(storeImage(files[i]));
     }
     Promise.all(promises).then((urls) => {
-      setFormData({...formData, images: formData.images.concat(urls)})
+      setFormData({ ...formData, images: formData.images.concat(urls) })
     }).catch((err) => {
       console.log(err);
     });
@@ -37,10 +37,10 @@ const DashCreatePost = () => {
     console.log(files);
   }
 
-  const storeImage = async(file) => {
+  const storeImage = async (file) => {
     return new Promise((resolve, reject) => {
       const storage = getStorage(app);
-      const filename = new Date().getTime()+ file.name;
+      const filename = new Date().getTime() + file.name;
       const storageRef = ref(storage, filename);
       const uploadTesk = uploadBytesResumable(storageRef, file);
       uploadTesk.on(
@@ -64,15 +64,21 @@ const DashCreatePost = () => {
     const res = await dispatch(createPost(formData));
     if (createPost.fulfilled.match(res)) {
       navigate("/admin-panel?tab=all-post");
-    } 
+    }
   }
 
   return (
-    <div>
+    <div className='createPost'>
       <form onSubmit={handleSubmit}>
         <div>
-          <input onChange={(e) => setFiles(e.target.files)} type="file" id='images' accept='image/*' multiple />
-          <button type='button' onClick={handleImageSubmit}>upload</button>
+          <div className='imgSubmit'>
+            <input onChange={(e) => setFiles(e.target.files)} type="file" id='images' accept='image/*' multiple />
+            <button type='button' onClick={handleImageSubmit}>upload</button>
+          </div>
+          {formData.images.length > 0 && formData.images.map((img) => (
+            <img src={img} className='postImg' />
+          )
+          )}
         </div>
         <input id='title' type="text" required placeholder='title' onChange={handleChance} />
         <textarea id="content" required placeholder='content' onChange={handleChance}></textarea>

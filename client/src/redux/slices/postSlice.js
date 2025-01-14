@@ -40,14 +40,14 @@ export const loadMorePosts = createAsyncThunk("loadMorePosts", async (startIndex
 
 })
 
-export const createPost = createAsyncThunk("createPost", async (postData, { rejectWithValue }) => {
+export const createPost = createAsyncThunk("createPost", async (formData, { rejectWithValue }) => {
     try {
         const res = await fetch("/api/post/create", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(postData)
+            body: JSON.stringify(formData)
         });
         const data = await res.json();
         if (!res.ok) {
@@ -60,6 +60,37 @@ export const createPost = createAsyncThunk("createPost", async (postData, { reje
     }
 })
 
+export const deletePost = createAsyncThunk("deletePost", async (postId) => {
+    try {
+        const res = await fetch(`/api/post/deletepost/${postId}`, {
+            method: "DELETE"
+        })
+        if (res.ok) {
+            return postId;
+        }
+    } catch (error) {
+        return error.message || "Someting went wrong -deletePost"
+    }
+})
+
+export const updetePost = createAsyncThunk("updatePost", async ({ postId, formData }) => {
+    try {
+        const res = await fetch(`/api/post/updatepost/${postId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
+        const data = await res.json();
+        if (!res.ok) {
+            return data.message || "Failed to update post";
+        }
+        return data;
+    } catch (error) {
+        return error.message || "Someting went wrong -updatePost"
+    }
+})
 const postSlice = createSlice({
     name: "post",
     initialState,
@@ -107,7 +138,34 @@ const postSlice = createSlice({
                 state.status = "succeeded";
                 state.error = null;
                 state.posts = [...state.posts, action.payload];
-            }) 
+            })
+            .addCase(deletePost.pending, (state) => {
+                state.status = "loading";
+                state.error = null;
+            })
+            .addCase(deletePost.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.posts = state.posts.filter((post) => post._id !== action.payload)
+            })
+            .addCase(deletePost.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(updetePost.pending, (state) => {
+                state.status = "loading";
+                state.error = null;
+            })
+            .addCase(updetePost.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(updetePost.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.error = null;
+                state.posts = state.posts.map((post) => 
+                    post._id === action.payload._id ? action.payload : post
+                )
+            })
     }
 })
 

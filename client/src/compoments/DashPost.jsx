@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPosts, loadMorePosts } from '../redux/slices/postSlice';
+import { deletePost, getPosts, loadMorePosts, updetePost } from '../redux/slices/postSlice';
 import { RxUpdate } from 'react-icons/rx';
 import { FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -13,10 +13,10 @@ const DashPost = () => {
   const error = useSelector((state) => state.post.error);
   const [startIndex, setStartIndex] = useState(0);
   const navigate = useNavigate();
-
+  console.log("showmore: " + showMore)
   useEffect(() => {
     dispatch(getPosts());
-  }, [dispatch])
+  }, [])
 
   const handleShowForward = () => {
     if (showMore) {
@@ -40,6 +40,14 @@ const DashPost = () => {
     }
   }
 
+  const handleDelete = (postId) => {
+    dispatch(deletePost(postId));
+  }
+
+  const handleUpdate = (postId) => {
+    navigate(`/admin-panel?tab=update-post&postId=${postId}`);
+  }
+
   return (
     <div className='dashPost'>
       <button className='button-55' onClick={() => navigate("/admin-panel?tab=create-post")}>Add Post</button>
@@ -56,8 +64,8 @@ const DashPost = () => {
               {post.title}
             </div>
             <div className='postIcons'>
-              <RxUpdate className='updateIcon'/>
-              <FaTimes className='deleteIcon' />
+              <RxUpdate className='updateIcon' onClick={() => handleUpdate(post._id)}/>
+              <FaTimes className='deleteIcon' onClick={() => handleDelete(post._id)} />
             </div>
           </div>
         ))
