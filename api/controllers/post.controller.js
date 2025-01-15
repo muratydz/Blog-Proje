@@ -88,7 +88,7 @@ export const deletePost = async (req, res, next) => {
 
 export const updatePost = async (req, res, next) => {
     if (!req.user.isAdmin) {
-        return next(errorHandler(403, "You are nor allowed to update this post"));
+        return next(errorHandler(403, "You are not allowed to update this post"));
     }
     const slug = req.body.title.split(" ").join("-").toLowerCase().replace(/[^a-zA-Z0-9-]/g, '');
     try {
