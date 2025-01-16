@@ -23,7 +23,7 @@ export const createComment = async (req, res, next) => {
     }
 }
 
-export const getAllComment = async (req, res, next) => {
+export const getAllComments = async (req, res, next) => {
     try {
         const startIndex = parseInt(req.query.startIndex) || 0;
         const limit = parseInt(req.query.limit) || 9;
@@ -38,10 +38,16 @@ export const getAllComment = async (req, res, next) => {
 
         const totalComment = await Comment.countDocuments();
 
+        const countApprovalComment = await Comment.find({ approval: true }).countDocuments();
+
+        const countunApprovalComment = await Comment.find({ approval: false }).countDocuments();
+        
         res.status(200).json({
             approvalComment,
             unApprovalComment,
-            totalComment
+            totalComment,
+            countApprovalComment,
+            countunApprovalComment,
         })
 
     } catch (error) {
@@ -49,7 +55,7 @@ export const getAllComment = async (req, res, next) => {
     }
 }
 
-export const getPostComment = async (req, res, next) => {
+export const getPostComments = async (req, res, next) => {
     try {
         const startIndex = parseInt(req.query.startIndex) || 0;
         const limit = parseInt(req.query.limit) || 9;

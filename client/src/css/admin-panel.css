@@ -337,7 +337,80 @@
   cursor: not-allowed;
 }
 
-/* Resim Yükleme */
+.dashCompoment {
+  display: flex;
+  text-align: center;
+}
+.dashCompoment .commentArea {
+  display: flex;
+  flex-direction: row;
+}
+.dashCompoment .commentArea .commentBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 250px;
+  height: 250px;
+  margin-bottom: 25px;
+  margin: 15px;
+  padding: 5px 15px;
+  background-color: #f8f9fa;
+  box-shadow: 3px 3px 3px #bebebe;
+  text-decoration: none;
+  color: black;
+  font-size: 25px;
+  cursor: pointer;
+  position: relative;
+}
+.dashCompoment .commentArea .commentBox:hover {
+  box-shadow: 6px 6px 12px #a1a1a1;
+}
+.dashCompoment .commentArea .commentBox div {
+  width: 50px;
+  height: 50px;
+  background-color: rgb(255, 255, 103);
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.dashCompoment .commentArea .verified {
+  background-color: rgb(199, 255, 199);
+}
+.dashCompoment .commentArea .unverified {
+  background-color: rgb(253, 201, 201);
+}
+
+.approvalComment .comment {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  width: 350px;
+  height: 100px;
+  margin-bottom: 25px;
+  padding: 5px 35px;
+  background-color: #f8f9fa;
+  box-shadow: 3px 3px 3px #bebebe;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+.approvalComment .comment:hover {
+  box-shadow: 6px 6px 12px #a1a1a1;
+}
+.approvalComment .comment .commentIcon {
+  font-size: 25px;
+  width: 80px;
+  display: flex;
+  justify-content: space-between;
+}
+
 /* Input Alanları */
 input[type=text],
 textarea,

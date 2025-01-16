@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { MdOutlinePostAdd } from "react-icons/md";
-import { FaBars, FaTimes, FaSignOutAlt } from "react-icons/fa";
+import { FaBars, FaTimes, FaSignOutAlt, FaComment } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
 import { signoutSuccess } from '../redux/slices/userSlice';
 
@@ -33,7 +33,7 @@ const DashSidebar = () => {
       console.log(error)
     }
   }
-  
+
   const handleUpdate = (userId) => {
     navigate(`/admin-panel?tab=update-user&userId=${userId}`);
     setShowSidebar(false);
@@ -53,7 +53,7 @@ const DashSidebar = () => {
           to={"/admin-panel?tab=all-post"}
           className={`link ${isActive('all-post') ? 'link-active' : ''}`}
           onClick={() => setShowSidebar(false)}
-          >
+        >
           <MdOutlinePostAdd />Post Management
         </Link>
         <Link
@@ -62,6 +62,13 @@ const DashSidebar = () => {
           onClick={() => setShowSidebar(false)}
         >
           <FaUser />User Management
+        </Link>
+        <Link
+          to={"/admin-panel?tab=comment"}
+          className={`link ${isActive('comment') ? 'link-active' : ''}`}
+          onClick={() => setImmediate(false)}
+        >
+          <FaComment />Comment Management
         </Link>
         <div className='currentUser sideCard' onClick={() => handleUpdate(currentUser._id)}>
           <img src={currentUser.profilePicture} alt="img" />

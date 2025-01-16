@@ -340,11 +340,11 @@
         flex-direction: column;
         gap: 1.5rem;
     }
-    
-    .postImg{
-        width:250px;
+
+    .postImg {
+        width: 250px;
     }
-    
+
     .imgSubmit {
         display: flex;
         flex-direction: column;
@@ -375,6 +375,7 @@
 
         }
     }
+
     /* Butonlar */
     button {
         padding: 10px 20px;
@@ -385,21 +386,103 @@
         cursor: pointer;
         transition: background-color 0.3s, color 0.3s;
     }
-    
+
     button:hover {
         background-color: #0056b3;
         color: #ffffff;
     }
-    
+
     button:disabled {
         background-color: #ccc;
         cursor: not-allowed;
     }
 }
 
+.dashCompoment {
+    display: flex;
+    text-align: center;
 
-/* Resim Yükleme */
+    .commentArea {
+        display: flex;
+        flex-direction: row;
 
+        .commentBox {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 250px;
+            height: 250px;
+            margin-bottom: 25px;
+            margin: 15px;
+            padding: 5px 15px;
+            background-color: #f8f9fa;
+            box-shadow: 3px 3px 3px #bebebe;
+            text-decoration: none;
+            color: black;
+            font-size: 25px;
+            cursor: pointer;
+            position: relative;
+
+            &:hover {
+                box-shadow: 6px 6px 12px #a1a1a1,
+            }
+
+            div {
+                width: 50px;
+                height: 50px;
+                background-color: rgb(255, 255, 103);
+                border-radius: 50%;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+
+        }
+
+        .verified {
+            background-color: rgb(199, 255, 199);
+        }
+
+        .unverified {
+            background-color: rgb(253, 201, 201);
+        }
+    }
+
+
+}
+
+.approvalComment {
+    .comment {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+        width: 350px;
+        height: 100px;
+        margin-bottom: 25px;
+        padding: 5px 35px;
+        background-color: #f8f9fa;
+        box-shadow: 3px 3px 3px #bebebe;
+        text-decoration: none;
+        color: black;
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: 6px 6px 12px #a1a1a1,
+        }
+        .commentIcon{
+            font-size: 25px;
+            width: 80px;
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}
 
 /* Input Alanları */
 input[type="text"],
