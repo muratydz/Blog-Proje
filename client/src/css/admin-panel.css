@@ -388,27 +388,60 @@
 
 .approvalComment .comment {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   text-align: center;
   width: 350px;
-  height: 100px;
   margin-bottom: 25px;
   padding: 5px 35px;
   background-color: #f8f9fa;
   box-shadow: 3px 3px 3px #bebebe;
   text-decoration: none;
   color: black;
-  cursor: pointer;
 }
 .approvalComment .comment:hover {
   box-shadow: 6px 6px 12px #a1a1a1;
 }
+.approvalComment .comment .commentHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 20px;
+}
+.approvalComment .comment .commentHeader p {
+  justify-content: end;
+  font-size: 10px;
+}
 .approvalComment .comment .commentIcon {
   font-size: 25px;
-  width: 80px;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
+  gap: 5px;
+}
+.approvalComment .comment .commentIcon .deleteIcon {
+  color: rgb(180, 0, 0);
+  cursor: pointer;
+}
+.approvalComment .comment .commentIcon .deleteIcon:hover {
+  color: rgb(238, 42, 42);
+}
+.approvalComment .comment .commentIcon .check {
+  color: green;
+  cursor: pointer;
+}
+.approvalComment .comment .commentIcon .check:hover {
+  color: rgb(6, 209, 6);
+}
+.approvalComment .comment .commentIcon .plus {
+  color: rgb(1, 1, 146);
+  cursor: pointer;
+}
+.approvalComment .comment .commentIcon .plus:hover {
+  color: rgb(0, 0, 255);
 }
 
 /* Input Alanları */

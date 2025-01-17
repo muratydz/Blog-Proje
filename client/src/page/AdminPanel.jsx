@@ -9,21 +9,18 @@ import DashAddUser from '../compoments/DashAddUser.jsx';
 import DashCreatePost from '../compoments/DashCreatePost.jsx';
 import DashPostUpdate from '../compoments/DashPostUpdate.jsx';
 import DashComment from '../compoments/DashComment.jsx';
-import DashApprovalComment from '../compoments/DashApprovalComment.jsx';
 
 const AdminPanel = () => {
   const location = useLocation();
   const [tab, setTab] = useState("");
   const [userId, setUserId] = useState("");
   const [postId, setPostId] = useState(""); 
-  const [situation, setSituation] = useState("");
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const tabFormUrl = urlParams.get("tab");
     const userIdFromUrl = urlParams.get("userId");
     const postIdFromUrl = urlParams.get("postId");
-    const situationCommentFromUrl = urlParams.get("situation");
     if (tabFormUrl) {
       setTab(tabFormUrl);
     }
@@ -32,9 +29,6 @@ const AdminPanel = () => {
     }
     if(postIdFromUrl){
       setPostId(postIdFromUrl);
-    }
-    if(situationCommentFromUrl){
-      setSituation(situationCommentFromUrl);
     }
   }, [location.search]);
 
@@ -52,7 +46,6 @@ const AdminPanel = () => {
         {tab === "update-user" && <DashUpdateUser userId={userId} />}
         {tab === "add-user" && <DashAddUser />}
         {tab === "comment" && <DashComment/>}
-        {tab === "situation-comment" && <DashApprovalComment situation={situation}/> }
       </div>
     </div>
   );

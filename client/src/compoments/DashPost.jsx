@@ -15,7 +15,7 @@ const DashPost = () => {
   const navigate = useNavigate();
   console.log("showmore: " + showMore)
   useEffect(() => {
-    dispatch(getPosts());
+    dispatch(getPosts(9));
   }, [])
 
   const handleShowForward = () => {

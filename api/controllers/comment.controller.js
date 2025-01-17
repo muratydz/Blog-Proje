@@ -23,7 +23,7 @@ export const createComment = async (req, res, next) => {
     }
 }
 
-export const getAllComments = async (req, res, next) => {
+export const getApprovalComment = async(req,res,next) => {
     try {
         const startIndex = parseInt(req.query.startIndex) || 0;
         const limit = parseInt(req.query.limit) || 9;
@@ -31,11 +31,28 @@ export const getAllComments = async (req, res, next) => {
         const approvalComment = await Comment.find({ approval: true })
             .skip(startIndex)
             .limit(limit);
+        res.status(200).json(approvalComment)
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const getUnApprovalComment = async(req,res,next) => {
+    try {
+        const startIndex = parseInt(req.query.startIndex) || 0;
+        const limit = parseInt(req.query.limit) || 9;
 
         const unApprovalComment = await Comment.find({ approval: false })
             .skip(startIndex)
-            .limit(limit);
+            .limit(limit)
+        res.status(200).json(unApprovalComment)
+    } catch (error) {
+        next(error);
+    }
+}
 
+export const getCountComments = async (req, res, next) => {
+    try {
         const totalComment = await Comment.countDocuments();
 
         const countApprovalComment = await Comment.find({ approval: true }).countDocuments();
@@ -43,8 +60,6 @@ export const getAllComments = async (req, res, next) => {
         const countunApprovalComment = await Comment.find({ approval: false }).countDocuments();
         
         res.status(200).json({
-            approvalComment,
-            unApprovalComment,
             totalComment,
             countApprovalComment,
             countunApprovalComment,

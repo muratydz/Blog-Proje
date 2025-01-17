@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { data } from "react-router-dom";
+import { data, Link } from "react-router-dom";
 
 
 const initialState = {
@@ -9,9 +9,10 @@ const initialState = {
     error: null
 }
 
-export const getPosts = createAsyncThunk("getPosts", async (_, { rejectWithValue }) => {
+export const getPosts = createAsyncThunk("getPosts", async (limit, { rejectWithValue }) => {
+    
     try {
-        const res = await fetch("/api/post/getposts");
+        const res = await fetch(`/api/post/getposts?limit=${limit}`);
         const data = await res.json();
         if (!res.ok) {
             return rejectWithValue(data.message || "Failed to fetch posts");
