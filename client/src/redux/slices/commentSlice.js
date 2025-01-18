@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
+    unapprovalComment: [],
+    approvalComment: [],
     countComment: [],
     status: "idle",
     error: null,
@@ -41,6 +43,38 @@ export const adminApproval = createAsyncThunk("adminApproval", async ({ commentI
         return error.message || "Failed to admin approval";
     }
 })
+
+export const getApprovalComment = createAsyncThunk("getApprovalComment", async() => {
+    try {
+        const res = await fetch("/api/comment/getApprovalComment")
+        const data = await res.json();
+
+        if(!res.ok) {
+            return data.message || "Someting went wrong";
+        }
+
+        return data;
+    } catch (error) {
+        return error.message || "Failed to get approval comment"
+    }
+})
+
+export const getUnapprovalComment = createAsyncThunk("getUnapprovalComment", async() => {
+    try {
+        const res = await fetch("/api/comment/getUnApprovalComment")
+        const data = await res.json();
+
+        if(!res.ok) {
+            return data.message || "Someting went wrong";
+        }
+
+        return data;
+    } catch (error) {
+        return error.message || "Failed to get approval comment"
+    }
+})
+
+
 
 const commentSlice = createSlice({
     name: "comments",
@@ -88,7 +122,31 @@ const commentSlice = createSlice({
                 state.ApprovalComment = state.ApprovalComment.filter(
                     (comment) => comment._id !== updatedComment._id
                 );
-            });
+            })
+            .addCase(getApprovalComment.pending, (state) => {
+                state.status = "loading";
+                state.error = null
+            })
+            .addCase(getApprovalComment.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(getApprovalComment.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.approvalComment = action.payload;
+            })
+            .addCase(getUnapprovalComment.pending, (state) => {
+                state.status = "loading";
+                state.error = null
+            })
+            .addCase(getUnapprovalComment.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(getUnapprovalComment.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.unapprovalComment = action.payload;
+            })
     }
 })
 

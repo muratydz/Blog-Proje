@@ -28,7 +28,7 @@ const DashComment = () => {
                 to={"?tab=unapproval-comment"}
                 className='unverified commentBox'>
                     <div>
-                        {countComment.countunApprovalComment}
+                        {countComment.countUnapprovalComment}
                     </div>
                     unverified comments
                 </Link>

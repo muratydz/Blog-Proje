@@ -3,6 +3,7 @@ import { data, Link } from "react-router-dom";
 
 
 const initialState = {
+    postTitle: [],
     posts: [],
     status: "idle",
     showMore: false,
@@ -92,6 +93,20 @@ export const updetePost = createAsyncThunk("updatePost", async ({ postId, formDa
         return error.message || "Someting went wrong -updatePost"
     }
 })
+
+export const getPostTitle = createAsyncThunk("postTitle", async()=> {
+    try {
+        const res = await fetch("/api/post/getposttitle")
+        const data = await res.json();
+
+        if(!res.ok){
+            return data.message;
+        }
+        return data;
+    } catch (error) {
+        return error.message 
+    }
+})
 const postSlice = createSlice({
     name: "post",
     initialState,
@@ -166,6 +181,18 @@ const postSlice = createSlice({
                 state.posts = state.posts.map((post) => 
                     post._id === action.payload._id ? action.payload : post
                 )
+            })
+            .addCase(getPostTitle.pending, (state) => {
+                state.status = "loading";
+                state.error = null
+            })
+            .addCase(getPostTitle.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload
+            })
+            .addCase(getPostTitle.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.postTitle = action.payload;
             })
     }
 })

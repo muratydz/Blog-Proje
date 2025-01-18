@@ -110,3 +110,13 @@ export const updatePost = async (req, res, next) => {
         next(error);
     }
 }
+
+export const getPostTitle = async(req, res, next) => {
+    try {
+        const postsTitle = await Post.find().select("title _id")
+
+        res.status(200).json(postsTitle);
+    } catch (error) {
+        next(error);
+    }
+}

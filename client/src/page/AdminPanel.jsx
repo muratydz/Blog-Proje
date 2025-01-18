@@ -9,6 +9,8 @@ import DashAddUser from '../compoments/DashAddUser.jsx';
 import DashCreatePost from '../compoments/DashCreatePost.jsx';
 import DashPostUpdate from '../compoments/DashPostUpdate.jsx';
 import DashComment from '../compoments/DashComment.jsx';
+import DashApproval from '../compoments/DashApproval.jsx';
+import DashUnapproval from '../compoments/DashUnapproval.jsx';
 
 const AdminPanel = () => {
   const location = useLocation();
@@ -46,6 +48,8 @@ const AdminPanel = () => {
         {tab === "update-user" && <DashUpdateUser userId={userId} />}
         {tab === "add-user" && <DashAddUser />}
         {tab === "comment" && <DashComment/>}
+        {tab === "approval-comment" && <DashApproval/>}
+        {tab === "unapproval-comment" && <DashUnapproval/>}
       </div>
     </div>
   );
