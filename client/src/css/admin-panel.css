@@ -415,6 +415,9 @@
   justify-content: end;
   font-size: 10px;
 }
+.approvalComment .comment .adminComment textarea {
+  width: 350px;
+}
 .approvalComment .comment .commentIcon {
   font-size: 25px;
   width: 100%;

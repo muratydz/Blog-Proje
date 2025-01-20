@@ -1,21 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {  getApprovalComment } from '../redux/slices/commentSlice';
-import {  FaTimes } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import { TbMailPlus } from "react-icons/tb";
-import { getPostTitle } from '../redux/slices/postSlice';
+import { adminComment, deleteComment } from '../redux/slices/commentSlice';
+
 
 
 const DashApproval = () => {
     const { approvalComment } = useSelector((state) => state.comment);
     const { postTitle } = useSelector((state) => state.post);
+    const [showPlus, setShowPlus] = useState(null);
+    const [text, setText] = useState('');
     const dispatch = useDispatch();
+    console.log(text);
     console.log(approvalComment);
     console.log(postTitle);
-    useEffect(() => {
-        dispatch(getApprovalComment());
-        dispatch(getPostTitle());
-    }, []);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -28,6 +27,13 @@ const DashApproval = () => {
         });
     };
 
+    const handleDelete = (commentId) => {
+        dispatch(deleteComment(commentId));
+    }
+
+    const handleAdminCommet = (commentId) => {
+        dispatch(adminComment({commentId, text}))
+    }
 
     return (
         <div className='approvalComment'>
@@ -42,8 +48,12 @@ const DashApproval = () => {
                             <p>{comment.comment}</p>
                         </div>
                         <div className='commentIcon'>
-                            <TbMailPlus className='plus' />
-                            <FaTimes className='deleteIcon' />
+                            <TbMailPlus className='plus' onClick={() => setShowPlus(comment._id)} />
+                            <FaTimes className='deleteIcon' onClick={() => handleDelete(comment._id)} />
+                        </div>
+                        <div className='adminComment' hidden={showPlus !== comment._id}>
+                            <textarea type="text" onChange={(e) => setText(e.target.value)} />
+                            <button onClick={() => handleAdminCommet(comment._id)}>send</button>
                         </div>
                     </div>
                 )

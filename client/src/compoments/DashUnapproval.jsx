@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUnapprovalComment } from '../redux/slices/commentSlice';
+import { adminApproval, deleteComment } from '../redux/slices/commentSlice';
 import {  FaTimes ,FaCheck} from "react-icons/fa";
 import { TbMailPlus } from "react-icons/tb";
-import { getPostTitle } from '../redux/slices/postSlice';
 
 
 const DashUnapproval = () => {
@@ -12,11 +11,7 @@ const DashUnapproval = () => {
     const dispatch = useDispatch();
     console.log(unapprovalComment);
     console.log(postTitle);
-    useEffect(() => {
-        dispatch(getUnapprovalComment());
-        dispatch(getPostTitle());
-    }, []);
-
+   
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('tr-TR', {
@@ -27,6 +22,14 @@ const DashUnapproval = () => {
             minute: '2-digit',
         });
     };
+
+     const handleCheck = (commentId, approval) => {
+        dispatch(adminApproval({commentId, approval}))
+     }
+
+     const handleDelete = (commentId) => {
+        dispatch(deleteComment(commentId));
+     }
 
 
     return (
@@ -43,8 +46,8 @@ const DashUnapproval = () => {
                         </div>
                         <div className='commentIcon'>
                             <TbMailPlus className='plus' />
-                            <FaCheck className='check' />
-                            <FaTimes className='deleteIcon' />
+                            <FaCheck className='check' onClick={() => handleCheck(comment._id, true)}/>
+                            <FaTimes className='deleteIcon' onClick={() => handleDelete(comment._id)}/>
                         </div>
                     </div>
                 )

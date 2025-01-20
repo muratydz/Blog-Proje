@@ -102,6 +102,9 @@ export const adminApproval = async (req, res, next) => {
                 },
             }, { new: true }
         );
+        if(!approvalComment){
+            return next(errorHandler(404, "Comment not found!"))
+        }
         res.status(200).json(approvalComment);
     } catch (error) {
         next(error);
