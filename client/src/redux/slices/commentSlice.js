@@ -74,27 +74,25 @@ export const getUnapprovalComment = createAsyncThunk("getUnapprovalComment", asy
     }
 })
 
-export const adminComment = createAsyncThunk("adminComment", async ({ commetId, text }) => {
+export const adminComment = createAsyncThunk("adminComment", async ({ commentId, adminComment }, { rejectWithValue }) => {
     try {
-        const res = await fetch(`/api/commet/adminComment/${commetId}`, {
+        const res = await fetch(`/api/comment/adminComment/${commentId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ text })
+            body: JSON.stringify({ adminComment })
         });
-        const data = res.json();
+        const data = await res.json();
 
         if (!res.ok) {
-            return data.message || "Someting went Wrong";
+            return rejectWithValue(data.message || "Something went wrong");
         }
         return data;
-
     } catch (error) {
-        return error.message || "Failed to add admin commet";
+        return rejectWithValue(error.message || "Failed to add admin comment");
     }
-})
-
+});
 export const deleteComment = createAsyncThunk("deleteComment", async (commentId) => {
     try {
         const res = await fetch(`/api/comment/delete/${commentId}`, {
@@ -193,23 +191,23 @@ const commentSlice = createSlice({
             })
             .addCase(adminComment.fulfilled, (state, action) => {
                 state.status = "succeeded";
-                const adminComment = action.payload;
-                if (adminComment.approval) {
-                    state.approvalComment = [...state.approvalComment, adminComment];
+                state.error = null;
+                const updatedComment = action.payload;
+                if (updatedComment.approval) {
+                    state.approvalComment = [...state.approvalComment, updatedComment];
                 } else {
-                    state.unapprovalComment = [...state.unapprovalComment, adminComment];
+                    state.unapprovalComment = [...state.unapprovalComment, updatedComment];
                 }
-
                 state.unapprovalComment = state.unapprovalComment.filter(
-                    (comment) => comment._id !== adminComment._id
+                    (comment) => comment._id !== updatedComment._id
                 );
-                state.approvalComment = state.approvalComment.filter(
-                    (comment) => comment._id !== adminComment._id
+                state.approvalComment = state.approvalComment.map(
+                    (comment) => comment._id === updatedComment._id ? updatedComment : comment
                 );
             })
             .addCase(deleteComment.pending, (state) => {
                 state.status = "loading";
-                state.error = null
+                state.error = null;
             })
             .addCase(deleteComment.rejected, (state, action) => {
                 state.status = "failed";

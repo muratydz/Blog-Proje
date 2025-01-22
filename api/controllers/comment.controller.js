@@ -126,6 +126,9 @@ export const adminComment = async (req, res, next) => {
                 }
             }, { new: true }
         );
+        if(!adminComment){
+            return next(errorHandler(404, "Comment not found!"));
+        }
         res.status(200).json(adminComment);
     } catch (error) {
         next(error);
