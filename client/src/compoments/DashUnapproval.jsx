@@ -25,7 +25,7 @@ const DashUnapproval = () => {
         });
     };
 
-    const handleChance = (e) => {
+    const handleChange = (e) => {
         setText(e.target.value);
     }
 
@@ -37,7 +37,7 @@ const DashUnapproval = () => {
         dispatch(deleteComment(commentId));
     }
 
-    const handleAdminCommet = (commentId, approval) => {
+    const handleAdminComment = (commentId, approval) => {
         dispatch(adminComment({ commentId, adminComment: text }))
         dispatch(adminApproval({ commentId, approval }))
     }
@@ -49,6 +49,7 @@ const DashUnapproval = () => {
 
     return (
         <div className='approvalComment'>
+            <h1>-Unverify Comment-</h1>
             <div>
                 {unapprovalComment?.map((comment) =>
                     <div key={comment._id} className='comment'>
@@ -65,8 +66,8 @@ const DashUnapproval = () => {
                             <FaTimes className='deleteIcon' onClick={() => handleDelete(comment._id)} />
                         </div>
                         <div className='adminComment' hidden={showPlus !== comment._id}>
-                            <textarea id='adminComment' value={text} type="text" onChange={handleChance} />
-                            <button value={comment.adminComment} onClick={() => handleAdminCommet(comment._id, true)}>send</button>
+                            <textarea id='adminComment' value={text} type="text" onChange={handleChange} />
+                            <button value={comment.adminComment} onClick={() => handleAdminComment(comment._id, true)}>send</button>
                         </div>
                     </div>
                 )

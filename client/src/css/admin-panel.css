@@ -446,6 +446,14 @@
 .approvalComment .comment .commentIcon .plus:hover {
   color: rgb(0, 0, 255);
 }
+.approvalComment .commentbtn {
+  gap: 15px;
+}
+.approvalComment .commentbtn .active {
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px -5px;
+  transform: translate3d(0, 2px, 0);
+  text-decoration: underline;
+}
 
 /* Input Alanları */
 input[type=text],

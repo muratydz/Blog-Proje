@@ -1,10 +1,9 @@
 import Comment from "../models/comment.model.js";
 import { errorHandler } from "../utils/error.js";
 
-
 export const createComment = async (req, res, next) => {
     if (!req.body.comment) {
-        return next(errorHandler(400, "Comment field cannot be left blank"))
+        return next(errorHandler(400, "Comment field cannot be left blank"));
     }
     try {
         const { postId, comment } = req.body;
@@ -19,11 +18,11 @@ export const createComment = async (req, res, next) => {
 
         res.status(200).json(newComment);
     } catch (error) {
-        next(error)
+        next(error);
     }
-}
+};
 
-export const getApprovalComment = async(req,res,next) => {
+export const getApprovalComment = async (req, res, next) => {
     try {
         const startIndex = parseInt(req.query.startIndex) || 0;
         const limit = parseInt(req.query.limit) || 9;
@@ -31,41 +30,40 @@ export const getApprovalComment = async(req,res,next) => {
         const approvalComment = await Comment.find({ approval: true })
             .skip(startIndex)
             .limit(limit);
-        res.status(200).json(approvalComment)
+        res.status(200).json(approvalComment);
     } catch (error) {
         next(error);
     }
-}
+};
 
-export const getUnApprovalComment = async(req,res,next) => {
+export const getUnApprovalComment = async (req, res, next) => {
     try {
         const startIndex = parseInt(req.query.startIndex) || 0;
         const limit = parseInt(req.query.limit) || 9;
 
         const unapprovalComment = await Comment.find({ approval: false })
             .skip(startIndex)
-            .limit(limit)
-        res.status(200).json(unapprovalComment)
+            .limit(limit);
+        res.status(200).json(unapprovalComment);
     } catch (error) {
         next(error);
     }
-}
+};
 
 export const getCountComments = async (req, res, next) => {
     try {
         const countApprovalComment = await Comment.find({ approval: true }).countDocuments();
 
         const countUnapprovalComment = await Comment.find({ approval: false }).countDocuments();
-        
+
         res.status(200).json({
             countApprovalComment,
             countUnapprovalComment,
-        })
-
+        });
     } catch (error) {
         next(error);
     }
-}
+};
 
 export const getPostComments = async (req, res, next) => {
     try {
@@ -81,16 +79,16 @@ export const getPostComments = async (req, res, next) => {
 
         res.status(200).json({
             postComment,
-            totalPostComment
-        })
+            totalPostComment,
+        });
     } catch (error) {
         next(error);
     }
-}
+};
 
 export const adminApproval = async (req, res, next) => {
     if (!req.user.isAdmin) {
-        return next(errorHandler(403, "You are not allowed"))
+        return next(errorHandler(403, "You are not allowed"));
     }
 
     try {
@@ -98,23 +96,23 @@ export const adminApproval = async (req, res, next) => {
             req.params.commentId,
             {
                 $set: {
-                    approval: req.body.approval
+                    approval: req.body.approval,
                 },
-            }, { new: true }
+            },
+            { new: true }
         );
-        if(!approvalComment){
-            return next(errorHandler(404, "Comment not found!"))
+        if (!approvalComment) {
+            return next(errorHandler(404, "Comment not found!"));
         }
         res.status(200).json(approvalComment);
     } catch (error) {
         next(error);
     }
-
-}
+};
 
 export const adminComment = async (req, res, next) => {
     if (!req.user.isAdmin) {
-        return next(errorHandler(403, "You are not allowed"))
+        return next(errorHandler(403, "You are not allowed"));
     }
     try {
         const adminComment = await Comment.findByIdAndUpdate(
@@ -123,26 +121,27 @@ export const adminComment = async (req, res, next) => {
                 $set: {
                     approval: true,
                     adminComment: req.body.adminComment,
-                }
-            }, { new: true }
+                },
+            },
+            { new: true }
         );
-        if(!adminComment){
+        if (!adminComment) {
             return next(errorHandler(404, "Comment not found!"));
         }
         res.status(200).json(adminComment);
     } catch (error) {
         next(error);
     }
-}
+};
 
 export const deleteComment = async (req, res, next) => {
     if (!req.user.isAdmin) {
-        return next(errorHandler(403, "You are not allowed to delete comment"))
+        return next(errorHandler(403, "You are not allowed to delete comment"));
     }
     try {
-        await Comment.findByIdAndDelete(req.params.commentId)
-        res.status(200).json("comment has been delete")
+        await Comment.findByIdAndDelete(req.params.commentId);
+        res.status(200).json("Comment has been deleted");
     } catch (error) {
         next(error);
     }
-}
+};

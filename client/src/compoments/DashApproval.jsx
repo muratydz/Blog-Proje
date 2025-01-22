@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaTimes } from "react-icons/fa";
-import { TbMailPlus,TbMailUp } from "react-icons/tb";
-import { adminComment, deleteComment } from '../redux/slices/commentSlice';
+import { TbMailPlus, TbMailUp } from "react-icons/tb";
+import { adminComment, deleteComment, getApprovalComment } from '../redux/slices/commentSlice';
 
 const DashApproval = () => {
-    const { approvalComment } = useSelector((state) => state.comment);
+    const { approvalComment, status, countComment } = useSelector((state) => state.comment);
     const { postTitle } = useSelector((state) => state.post);
     const [showPlus, setShowPlus] = useState(null);
     const [text, setText] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
     const dispatch = useDispatch();
+
+    const totalPages = Math.ceil(countComment.countApprovalComment / 9);
+    console.log(countComment.countApprovalComment)
+    console.log(totalPages)
 
     const handleChance = (e) => {
         setText(e.target.value);
@@ -31,8 +36,9 @@ const DashApproval = () => {
     }
 
     const handleAdminCommet = (commentId) => {
+        const startIndex = (currentPage-1)*9
         dispatch(adminComment({ commentId, adminComment: text }));
-        console.log("yolladı");
+        dispatch(getApprovalComment(startIndex))
     }
 
     const handlePlus = (comment) => {
@@ -40,9 +46,16 @@ const DashApproval = () => {
         setText(comment.adminComment || "");
     }
 
+    const handlePageChange = (page) => {
+        const startIndex = page*9;
+        setCurrentPage(page+1)
+        dispatch(getApprovalComment(startIndex));
+    }
+
     return (
         <div className='approvalComment'>
             <div>
+            <h1>-Verify Comment-</h1>
                 {approvalComment?.map((comment, index) =>
                     <div key={index} className='comment'>
                         <div className='commentHeader'>
@@ -53,15 +66,26 @@ const DashApproval = () => {
                             <p>{comment.comment}</p>
                         </div>
                         <div className='commentIcon'>
-                            {comment.adminComment ?<TbMailUp className='plus' onClick={() => handlePlus(comment)} />:<TbMailPlus className='plus' onClick={() => handlePlus(comment)} />}
+                            {comment.adminComment ? <TbMailUp className='plus' onClick={() => handlePlus(comment)} /> : <TbMailPlus className='plus' onClick={() => handlePlus(comment)} />}
                             <FaTimes className='deleteIcon' onClick={() => handleDelete(comment._id)} />
                         </div>
                         <div className='adminComment' hidden={showPlus !== comment._id}>
                             <textarea id='adminComment' value={text} type="text" onChange={handleChance} />
-                            <button onClick={() => handleAdminCommet(comment._id)}>send</button>
+                            <button onClick={() => handleAdminCommet(comment._id)}>update</button>
                         </div>
                     </div>
                 )}
+                <div hidden={status === "loading" || status === "failed"} className='commentbtn'>
+                    {[...Array(totalPages)].map((_, index) => (
+                        <button
+                            key={index}
+                            className={`button-55 ${currentPage === index + 1 ? 'active' : ''}`}
+                            onClick={() => handlePageChange(index)}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                </div>
             </div>
         </div>
     );

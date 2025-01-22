@@ -489,8 +489,8 @@
             }
         }
 
-        .adminComment{
-            textarea{
+        .adminComment {
+            textarea {
                 width: 350px;
             }
         }
@@ -505,7 +505,8 @@
             .deleteIcon {
                 color: rgb(180, 0, 0);
                 cursor: pointer;
-                &:hover{
+
+                &:hover {
                     color: rgb(238, 42, 42);
                 }
             }
@@ -513,7 +514,8 @@
             .check {
                 color: green;
                 cursor: pointer;
-                &:hover{
+
+                &:hover {
                     color: rgb(6, 209, 6);
                 }
             }
@@ -521,11 +523,24 @@
             .plus {
                 color: rgb(1, 1, 146);
                 cursor: pointer;
-                &:hover{
+
+                &:hover {
                     color: rgb(0, 0, 255);
                 }
             }
 
+
+
+        }
+    }
+
+    .commentbtn {
+        gap: 15px;
+
+        .active {
+            box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+            transform: translate3d(0, 2px, 0);
+            text-decoration: underline;
         }
     }
 }

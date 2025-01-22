@@ -44,9 +44,9 @@ export const adminApproval = createAsyncThunk("adminApproval", async ({ commentI
     }
 })
 
-export const getApprovalComment = createAsyncThunk("getApprovalComment", async () => {
+export const getApprovalComment = createAsyncThunk("getApprovalComment", async (startIndex) => {
     try {
-        const res = await fetch("/api/comment/getApprovalComment")
+        const res = await fetch(`/api/comment/getApprovalComment?startIndex=${startIndex}`)
         const data = await res.json();
 
         if (!res.ok) {
@@ -193,16 +193,12 @@ const commentSlice = createSlice({
                 state.status = "succeeded";
                 state.error = null;
                 const updatedComment = action.payload;
-                if (updatedComment.approval) {
-                    state.approvalComment = [...state.approvalComment, updatedComment];
-                } else {
+                if (!updatedComment.approval) {
                     state.unapprovalComment = [...state.unapprovalComment, updatedComment];
-                }
+                } 
+
                 state.unapprovalComment = state.unapprovalComment.filter(
                     (comment) => comment._id !== updatedComment._id
-                );
-                state.approvalComment = state.approvalComment.map(
-                    (comment) => comment._id === updatedComment._id ? updatedComment : comment
                 );
             })
             .addCase(deleteComment.pending, (state) => {
